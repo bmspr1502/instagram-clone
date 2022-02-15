@@ -6,6 +6,8 @@ import { Provider } from "react-redux";
 import { createStore, applyMiddleware } from "redux";
 import rootReducer from "./redux/reducers";
 import thunk from "redux-thunk";
+
+import AddScreen from "./components/main/Add";
 const store = createStore(rootReducer, applyMiddleware(thunk));
 
 const firebaseConfig = {
@@ -89,6 +91,7 @@ export class App extends Component {
               component={MainScreen}
               options={{ headerShown: false }}
             />
+            <Stack.Screen name="Add" component={AddScreen} />
           </Stack.Navigator>
         </NavigationContainer>
       </Provider>

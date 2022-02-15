@@ -1,15 +1,18 @@
 import React, { Component } from "react";
 import { View, Text } from "react-native";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { fetchUser } from "../redux/actions/index";
 import FeedScreen from "./main/Feed";
-import AddScreen from "./main/Add";
 import ProfileScreen from "./main/Profile";
-const Tab = createBottomTabNavigator();
+const Tab = createMaterialBottomTabNavigator();
+
+const EmptyScreen = () => {
+  return null;
+};
 
 export class Main extends Component {
   componentDidMount() {
@@ -17,7 +20,7 @@ export class Main extends Component {
   }
   render() {
     return (
-      <Tab.Navigator>
+      <Tab.Navigator initialRouteName="Feed">
         <Tab.Screen
           name="Feed"
           component={FeedScreen}
@@ -25,14 +28,16 @@ export class Main extends Component {
             tabBarIcon: ({ color, size }) => (
               <MaterialCommunityIcons name="home" color={color} size={size} />
             ),
+            headerShown: false,
           }}
         />
         <Tab.Screen
-          name="Add"
-          component={AddScreen}
+          name="AddContainer"
+          component={EmptyScreen}
           listeners={({ navigation }) => ({
             tabPress: (event) => {
               event.preventDefault();
+              navigation.navigate("Add");
             },
           })}
           options={{
@@ -56,6 +61,7 @@ export class Main extends Component {
                 size={size}
               />
             ),
+            headerShown: false,
           }}
         />
       </Tab.Navigator>
