@@ -20,13 +20,19 @@ export class Main extends Component {
   }
   render() {
     return (
-      <Tab.Navigator initialRouteName="Feed">
+      <Tab.Navigator
+        initialRouteName="Feed"
+        labeled={false}
+        activeColor="#f0edf6"
+        inactiveColor="#3e2465"
+        barStyle={{ backgroundColor: "#694fad" }}
+      >
         <Tab.Screen
           name="Feed"
           component={FeedScreen}
           options={{
             tabBarIcon: ({ color, size }) => (
-              <MaterialCommunityIcons name="home" color={color} size={size} />
+              <MaterialCommunityIcons name="home" color={color} size={26} />
             ),
             headerShown: false,
           }}
@@ -42,11 +48,7 @@ export class Main extends Component {
           })}
           options={{
             tabBarIcon: ({ color, size }) => (
-              <MaterialCommunityIcons
-                name="plus-box"
-                color={color}
-                size={size}
-              />
+              <MaterialCommunityIcons name="plus-box" color={color} size={26} />
             ),
           }}
         />
@@ -58,7 +60,7 @@ export class Main extends Component {
               <MaterialCommunityIcons
                 name="account-circle"
                 color={color}
-                size={size}
+                size={26}
               />
             ),
             headerShown: false,
