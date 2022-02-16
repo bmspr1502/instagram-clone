@@ -3,7 +3,7 @@ import { View, Text } from "react-native";
 
 export default function Feed() {
   return (
-    <View style={{ paddingTop: 40 }}>
+    <View>
       <Text>Feed</Text>
     </View>
   );

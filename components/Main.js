@@ -5,9 +5,15 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { fetchUser, fetchUserPosts } from "../redux/actions/index";
+import {
+  fetchUser,
+  fetchUserPosts,
+  fetchUserFollowing,
+} from "../redux/actions/index";
 import FeedScreen from "./main/Feed";
 import ProfileScreen from "./main/Profile";
+import SearchScreen from "./main/Search";
+import firebase from "firebase";
 const Tab = createMaterialBottomTabNavigator();
 
 const EmptyScreen = () => {
@@ -18,6 +24,7 @@ export class Main extends Component {
   componentDidMount() {
     this.props.fetchUser();
     this.props.fetchUserPosts();
+    this.props.fetchUserFollowing();
   }
   render() {
     return (
@@ -37,6 +44,17 @@ export class Main extends Component {
             ),
             headerShown: false,
           }}
+        />
+        <Tab.Screen
+          name="Search"
+          component={SearchScreen}
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <MaterialCommunityIcons name="magnify" color={color} size={26} />
+            ),
+            headerShown: false,
+          }}
+          navigation={this.props.navigation}
         />
         <Tab.Screen
           name="AddContainer"
@@ -66,6 +84,14 @@ export class Main extends Component {
             ),
             headerShown: false,
           }}
+          listeners={({ navigation }) => ({
+            tabPress: (event) => {
+              event.preventDefault();
+              navigation.navigate("Profile", {
+                uid: firebase.auth().currentUser.uid,
+              });
+            },
+          })}
         />
       </Tab.Navigator>
     );
@@ -75,7 +101,10 @@ const mapStateToProps = (store) => ({
   currentUser: store.userState.currentUser,
 });
 const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({ fetchUser: fetchUser, fetchUserPosts }, dispatch);
+  return bindActionCreators(
+    { fetchUser, fetchUserPosts, fetchUserFollowing },
+    dispatch
+  );
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main);
