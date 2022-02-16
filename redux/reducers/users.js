@@ -2,7 +2,7 @@ import { USER_POSTS_STATE_CHANGE, USER_STATE_CHANGE } from "../constants";
 
 const initialState = {
   currentUser: null,
-  posts: [],
+  posts: Array(),
 };
 
 export const user = (state = initialState, action) => {
